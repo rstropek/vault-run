@@ -1,6 +1,6 @@
 # Vault Run - AI Coding Hackathon
 
-![Vault Run Board](vault-run-board.png)
+![Vault Run Board](vault-run-board.svg)
 
 ## The Challenge
 
