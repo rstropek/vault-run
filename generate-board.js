@@ -94,6 +94,7 @@ const PALETTE = {
   player2:      '#27AE60',   // player 2 — green
   player3:      '#2471A3',   // player 3 — blue
   player4:      '#7D3C98',   // player 4 — purple
+  measureColor: '#5B8DB8',   // engineering dimension annotations
 };
 
 const FONT = "'Helvetica Neue', Arial, 'Liberation Sans', sans-serif";
@@ -129,6 +130,7 @@ function buildCSS() {
       --c-player-2:      ${p.player2};
       --c-player-3:      ${p.player3};
       --c-player-4:      ${p.player4};
+      --c-measure:       ${p.measureColor};
       /* ── Typography ─────────────────────────────────────── */
       --font: ${FONT};
     }
@@ -169,6 +171,12 @@ function buildCSS() {
     .t-center-sub  { font-size: 16px;                     fill: var(--c-center-sub);  letter-spacing: 2px; }
     .t-center-hint { font-size: 11px;                     fill: var(--c-center-sub);  opacity: 0.6; }
     .player-token  { /* glow handled via stroke on circle */ }
+
+    /* ── Measurement annotations (measured SVG only) ────────── */
+    .dim-line  { stroke: var(--c-measure); stroke-width: 0.8; fill: none; }
+    .dim-ext   { stroke: var(--c-measure); stroke-width: 0.6; fill: none; stroke-dasharray: 4 2; }
+    .dim-label { font-size: 10px; font-weight: 600; fill: var(--c-measure); }
+    .dim-bg    { fill: #ffffff; opacity: 0.85; }
   `.trim();
 }
 
@@ -371,11 +379,14 @@ function renderCornerField(f) {
   const labelY1 = y + contentH - 26;
 
   if (cornerType === 'start') {
-    // Font Awesome: arrow-left
-    const d = 'M73.4 297.4C60.9 309.9 60.9 330.2 73.4 342.7L233.4 502.7C245.9 515.2 266.2'
-      + ' 515.2 278.7 502.7C291.2 490.2 291.2 469.9 278.7 457.4L173.3 352L544 352C561.7 352'
-      + ' 576 337.7 576 320C576 302.3 561.7 288 544 288L173.3 288L278.7 182.6C291.2 170.1'
-      + ' 291.2 149.8 278.7 137.3C266.2 124.8 245.9 124.8 233.4 137.3L73.4 297.3z';
+    // Font Awesome Free v7.2.0: arrows-left-right
+    const d = 'M502.6 438.6L598.6 342.6C611.1 330.1 611.1 309.8 598.6 297.3L502.6 201.3'
+      + 'C490.1 188.8 469.8 188.8 457.3 201.3C444.8 213.8 444.8 234.1 457.3 246.6L498.7 288'
+      + 'L141.2 288L182.6 246.6C195.1 234.1 195.1 213.8 182.6 201.3C170.1 188.8 149.8 188.8'
+      + ' 137.3 201.3L41.3 297.3C35.3 303.3 31.9 311.4 31.9 319.9C31.9 328.4 35.3 336.5 41.3'
+      + ' 342.5L137.3 438.5C149.8 451 170.1 451 182.6 438.5C195.1 426 195.1 405.7 182.6 393.2'
+      + 'L141.2 351.8L498.7 351.8L457.3 393.2C444.8 405.7 444.8 426 457.3 438.5C469.8 451'
+      + ' 490.1 451 502.6 438.5z';
     return bg
       + mkIcon([`<path d="${d}" class="corner-icon"/>`], 62, y + 16)
       + t(cx, labelY1, 'Start', 'class="t-corner-label" text-anchor="middle"');
@@ -473,7 +484,7 @@ function renderRegularField(f) {
   const stripClass = type === 'pickup' ? 'strip-pickup' : 'strip-deposit';
   const tagLabel   = type === 'pickup' ? 'PICKUP' : 'DEPOSIT';
 
-  const pad            = 8;
+  const pad            = 10;  // gives title area = h − STRIP_H − pad − tableH = 70px
   const textAreaTop    = y + pad;
   const textAreaBottom = y + h - STRIP_H - pad;
 
@@ -524,8 +535,8 @@ function renderChanceField(f) {
 
 // ─── Board chrome ─────────────────────────────────────────────────────────────
 
-function renderBoardBackground() {
-  return r(0, 0, SVG_SIZE, SVG_SIZE, 'class="svg-bg"')
+function renderBoardBackground(w = SVG_SIZE, h = SVG_SIZE) {
+  return r(0, 0, w, h, 'class="svg-bg"')
     + r(BOARD_X - 6, BOARD_Y - 6, BOARD_SIZE + 12, BOARD_SIZE + 12, 'class="board-frame" rx="8"')
     + r(BOARD_X, BOARD_Y, BOARD_SIZE, BOARD_SIZE, 'class="board-surface" rx="4"');
 }
@@ -579,12 +590,114 @@ function formatSVG(svg) {
   return out.join('\n');
 }
 
+// ─── Measurement annotations ──────────────────────────────────────────────────
+// Draws engineering-style dimension lines for the measured SVG variant.
+//
+// dimV(lineX, y1, y2, label) — vertical dimension line at lineX
+// dimH(x1, x2, lineY, label) — horizontal dimension line at lineY
+//
+// Each annotation: two dashed extension lines + solid dimension line with
+// arrowheads at both ends + label on a white background rect.
+
+function renderMeasurements(layout) {
+  const EXT  = 10;   // extension line overshoot past the dimension line
+  const GAP  = 8;    // gap between element edge and extension line start
+  const LBLH = 13;   // label background height
+  const LBLW = 34;   // label background width (wide enough for 4-digit values)
+
+  // Vertical dim: dimension line runs at x=lineX between y1 and y2.
+  // Extension lines connect the measured element (at elemX) to lineX.
+  function dimV(elemX, y1, y2, lineX, label) {
+    const x1 = Math.min(elemX + GAP, lineX - GAP);
+    const x2 = lineX + EXT;
+    const my  = (y1 + y2) / 2;
+    return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y1}" class="dim-ext"/>`
+      + `<line x1="${x1}" y1="${y2}" x2="${x2}" y2="${y2}" class="dim-ext"/>`
+      + `<line x1="${lineX}" y1="${y1}" x2="${lineX}" y2="${y2}"`
+      +   ` marker-start="url(#dim-arrow)" marker-end="url(#dim-arrow)" class="dim-line"/>`
+      + `<rect x="${lineX - LBLW / 2}" y="${my - LBLH / 2}" width="${LBLW}" height="${LBLH}" class="dim-bg"/>`
+      + `<text x="${lineX}" y="${my + 4}" text-anchor="middle" class="dim-label">${label}</text>`;
+  }
+
+  // Horizontal dim: dimension line runs at y=lineY between x1 and x2.
+  // Extension lines connect the measured element (at elemY) to lineY.
+  function dimH(x1, x2, elemY, lineY, label) {
+    const y1 = Math.min(elemY + GAP, lineY - GAP);
+    const y2 = lineY + EXT;
+    const mx  = (x1 + x2) / 2;
+    return `<line x1="${x1}" y1="${y1}" x2="${x1}" y2="${y2}" class="dim-ext"/>`
+      + `<line x1="${x2}" y1="${y1}" x2="${x2}" y2="${y2}" class="dim-ext"/>`
+      + `<line x1="${x1}" y1="${lineY}" x2="${x2}" y2="${lineY}"`
+      +   ` marker-start="url(#dim-arrow)" marker-end="url(#dim-arrow)" class="dim-line"/>`
+      + `<rect x="${mx - LBLW / 2}" y="${lineY - LBLH / 2}" width="${LBLW}" height="${LBLH}" class="dim-bg"/>`
+      + `<text x="${mx}" y="${lineY + 4}" text-anchor="middle" class="dim-label">${label}</text>`;
+  }
+
+  // ── Reference field for height/width annotations: id=2 (bottom row, rot=0) ──
+  const fRef = layout.find(f => f.id === 2);
+  const { x: fx, y: fy, w: fw, h: fh } = fRef;
+
+  // Derived geometry (must match renderRegularField with pad=10, tableH=40)
+  const pad    = 10, tableH = 40;
+  const stripY = fy + fh - STRIP_H;                           // top of color strip
+  const divY   = fy + fh - STRIP_H - pad - tableH;            // title/table divider
+
+  // Vertical dim lines stack to the right of the board
+  const boardRight = BOARD_X + BOARD_SIZE;                    // 1140
+  const vx1 = boardRight + 25;   // total height
+  const vx2 = boardRight + 60;   // title area height
+  const vx3 = boardRight + 95;   // strip height
+
+  // ── Reference field for player diameter: id=3 (also bottom row) ───────────
+  const fPly = layout.find(f => f.id === 3);
+  const R    = PLAYER_R;
+  const gap  = 6;
+  const totalSlots = PLAYER_POSITIONS[fPly.id]?.length ?? 1;
+  const totalW     = totalSlots * 2 * R + (totalSlots - 1) * gap;
+  const localX0    = fPly.x + (fPly.w - totalW) / 2 + R;     // cx of slot 0
+  const localY0    = fPly.y + fPly.h - STRIP_H / 2;
+  const { x: pcx, y: pcy } = fieldToAbsolute(fPly, localX0, localY0);
+
+  // Horizontal dims below board
+  const boardBottom = BOARD_Y + BOARD_SIZE;                   // 1140
+  const hLineY      = boardBottom + 35;                       // field width
+  const hBoardLineY = boardBottom + 65;                       // total board width
+  const plyLineY    = pcy + R + 25;                           // player diameter
+
+  // Vertical dim for total board height
+  const vx4 = boardRight + 130;                               // total board height
+
+  return [
+    // Total field height (180)
+    dimV(fx + fw,   fy,          fy + fh,             vx1,       '180'),
+    // Title area height (70)
+    dimV(fx + fw,   fy,          divY,                 vx2,       '70'),
+    // Strip height (60)
+    dimV(fx + fw,   stripY,      fy + fh,              vx3,       '60'),
+    // Total board height (1080)
+    dimV(boardRight, BOARD_Y,    BOARD_Y + BOARD_SIZE, vx4,       '1080'),
+    // Total field width (180)
+    dimH(fx,        fx + fw,     fy,                   hLineY,    '180'),
+    // Total board width (1080)
+    dimH(BOARD_X,   BOARD_X + BOARD_SIZE, BOARD_Y,    hBoardLineY, '1080'),
+    // Player icon diameter (35)
+    dimH(pcx - R,   pcx + R,     pcy,                  plyLineY,  '\u2205 35'),
+  ].join('');
+}
+
 // ─── Main assembly ────────────────────────────────────────────────────────────
 
-function generateSVG() {
+function generateSVG(withMeasurements = false) {
   const layout = layoutFields(FIELDS);
 
-  const defs = `<defs><style>${buildCSS()}</style></defs>`;
+  const arrowMarker = withMeasurements
+    ? `<marker id="dim-arrow" markerWidth="6" markerHeight="6"`
+      + ` refX="5" refY="3" orient="auto-start-reverse">`
+      + `<path d="M0,0 L0,6 L6,3 z" fill="${PALETTE.measureColor}"/>`
+      + `</marker>`
+    : '';
+
+  const defs = `<defs><style>${buildCSS()}</style>${arrowMarker}</defs>`;
 
   const fields = layout.map(f => {
     if (f.type === 'corner') return renderCornerField(f);
@@ -592,12 +705,16 @@ function generateSVG() {
     return renderRegularField(f);
   });
 
-  const body = [defs, renderBoardBackground(), ...fields, renderCenterArea(), renderPlayers(layout)].join('');
+  const svgW = withMeasurements ? SVG_SIZE + 100 : SVG_SIZE;
+  const svgH = withMeasurements ? SVG_SIZE + 20  : SVG_SIZE;
+
+  const measurements = withMeasurements ? renderMeasurements(layout) : '';
+  const body = [defs, renderBoardBackground(svgW, svgH), ...fields, renderCenterArea(), renderPlayers(layout), measurements].join('');
 
   const raw = '<?xml version="1.0" encoding="UTF-8"?>'
     + `<svg xmlns="http://www.w3.org/2000/svg"`
-    +     ` viewBox="0 0 ${SVG_SIZE} ${SVG_SIZE}"`
-    +     ` width="${SVG_SIZE}" height="${SVG_SIZE}">`
+    +     ` viewBox="0 0 ${svgW} ${svgH}"`
+    +     ` width="${svgW}" height="${svgH}">`
     + `<title>Vault Run \u2014 Board Game</title>`
     + body
     + '</svg>';
@@ -607,6 +724,7 @@ function generateSVG() {
 
 // ─── Entry point ──────────────────────────────────────────────────────────────
 
-const svg = generateSVG();
-fs.writeFileSync(OUTPUT_FILE, svg, 'utf8');
-console.log(`Board written to ${OUTPUT_FILE}`);
+fs.writeFileSync('vault-run-board.svg',          generateSVG(false), 'utf8');
+fs.writeFileSync('vault-run-board-measured.svg', generateSVG(true),  'utf8');
+console.log('Board written to vault-run-board.svg');
+console.log('Measured board written to vault-run-board-measured.svg');
