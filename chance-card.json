@@ -1,0 +1,192 @@
+[
+    {
+      "title": "Tailwind Delivery",
+      "effectType": "extra-turn",
+      "description": "Take another full turn immediately."
+    },
+    {
+      "title": "Police Escort",
+      "effectType": "extra-turn",
+      "description": "Take another full turn immediately."
+    },
+    {
+      "title": "Shortcut Through Side Streets",
+      "effectType": "move-relative",
+      "direction": "clockwise",
+      "steps": 3,
+      "description": "Move 3 spaces clockwise."
+    },
+    {
+      "title": "Missed Exit",
+      "effectType": "move-relative",
+      "direction": "counter-clockwise",
+      "steps": 2,
+      "description": "Move 2 spaces counter-clockwise."
+    },
+    {
+      "title": "Green Light Wave",
+      "effectType": "move-relative",
+      "direction": "clockwise",
+      "steps": 5,
+      "description": "Move 5 spaces clockwise."
+    },
+    {
+      "title": "Wrong Turn at the Roundabout",
+      "effectType": "move-relative",
+      "direction": "counter-clockwise",
+      "steps": 4,
+      "description": "Move 4 spaces counter-clockwise."
+    },
+    {
+      "title": "Emergency Dispatch",
+      "effectType": "move-to-field-type",
+      "target": "start",
+      "description": "Go directly to Start."
+    },
+    {
+      "title": "GPS Failure",
+      "effectType": "move-to-next-field-type",
+      "direction": "clockwise",
+      "target": "chance",
+      "description": "Go directly to the next Chance field clockwise."
+    },
+    {
+      "title": "VIP Pickup",
+      "effectType": "move-to-next-contract-filter",
+      "direction": "clockwise",
+      "targetFlow": "pickup",
+      "description": "Go directly to the next pickup contract field clockwise."
+    },
+    {
+      "title": "Fast Lane Access",
+      "effectType": "move-relative",
+      "direction": "choose-direction",
+      "steps": 1,
+      "description": "Move 1 space clockwise or counter-clockwise."
+    },
+    {
+      "title": "Engine Warning Light",
+      "effectType": "skip-turns",
+      "turns": 1,
+      "description": "Skip your next turn."
+    },
+    {
+      "title": "Flat Tire",
+      "effectType": "skip-turns",
+      "turns": 1,
+      "description": "Skip your next turn."
+    },
+    {
+      "title": "Brake Inspection",
+      "effectType": "send-to-garage",
+      "description": "Go to Garage immediately. Do not pass Start."
+    },
+    {
+      "title": "Cracked Windshield",
+      "effectType": "send-to-garage",
+      "description": "Go to Garage immediately. Do not pass Start."
+    },
+    {
+      "title": "Replacement Driver Found",
+      "effectType": "get-out-of-garage-card",
+      "description": "If in Garage, leave immediately. Otherwise keep this card until needed."
+    },
+    {
+      "title": "Government Logistics Grant",
+      "effectType": "receive",
+      "amount": 50000,
+      "description": "Receive 50,000 into your Cash Vault."
+    },
+    {
+      "title": "Dividend from Fleet Investment",
+      "effectType": "receive",
+      "amount": 30000,
+      "description": "Receive 30,000 into your Cash Vault."
+    },
+    {
+      "title": "Insurance Refund",
+      "effectType": "receive",
+      "amount": 25000,
+      "description": "Receive 25,000 into your Cash Vault."
+    },
+    {
+      "title": "Bonus for Perfect Audit",
+      "effectType": "receive",
+      "amount": 40000,
+      "description": "Receive 40,000 into your Cash Vault."
+    },
+    {
+      "title": "Holiday Season Boom",
+      "effectType": "receive",
+      "amount": 35000,
+      "description": "Receive 35,000 into your Cash Vault."
+    },
+    {
+      "title": "Emergency Service Funding",
+      "effectType": "receive",
+      "amount": 60000,
+      "description": "Receive 60,000 into your Cash Vault."
+    },
+    {
+      "title": "Fuel Price Shock",
+      "effectType": "pay",
+      "amount": 20000,
+      "payTo": "bank",
+      "description": "Pay 20,000 to the Bank."
+    },
+    {
+      "title": "Highway Toll Increase",
+      "effectType": "pay",
+      "amount": 15000,
+      "payTo": "bank",
+      "description": "Pay 15,000 to the Bank."
+    },
+    {
+      "title": "Income Tax Audit",
+      "effectType": "pay-percentage",
+      "percentage": 10,
+      "payTo": "bank",
+      "description": "Pay 10% of your money to the Bank."
+    },
+    {
+      "title": "Buy a New Truck",
+      "effectType": "pay",
+      "amount": 80000,
+      "payTo": "bank",
+      "description": "Pay 80,000 to the Bank."
+    },
+    {
+      "title": "Security Upgrade Required",
+      "effectType": "pay",
+      "amount": 30000,
+      "payTo": "bank",
+      "description": "Pay 30,000 to the Bank."
+    },
+    {
+      "title": "Robbery",
+      "effectType": "lose-truck-cash",
+      "description": "You are robbed. Lose all money in your truck."
+    },
+    {
+      "title": "Damaged Loading Dock",
+      "effectType": "pay-each-other-player",
+      "amount": 5000,
+      "description": "Pay 5,000 to every other player."
+    },
+    {
+      "title": "Late Delivery Compensation",
+      "effectType": "pay-each-other-player",
+      "amount": 3000,
+      "description": "Pay 3,000 to every other player."
+    },
+    {
+      "title": "Exclusive Tender",
+      "effectType": "special-contract-purchase",
+      "description": "You may immediately buy one unowned contract field (if there is one). You have to pay the regular contract price to the Bank."
+    },
+    {
+      "title": "Contract Review",
+      "effectType": "waive-next-contract-fine",
+      "description": "Choose one of your contracts. Its next failure fine is waived."
+    }
+  ]

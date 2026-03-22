@@ -204,14 +204,13 @@ const PLAYER_R = 17.5; // circle radius for player tokens (35px diameter)
 
 // Renders a single player token centered on (0, 0).
 // Position it on the board by wrapping in a <g transform="translate(x,y)">.
+// The truck icon is referenced from <symbol id="truck-icon"> defined in <defs>.
 function renderPlayerToken(playerIndex) {
   const s  = (PLAYER_R * 1.5 * 0.75) / 576;
   const tx = (-320 * s).toFixed(2);
   const ty = (-336 * s).toFixed(2);
   return `<circle cx="0" cy="0" r="${PLAYER_R}" style="fill:${PLAYER_COLORS[playerIndex]};stroke:var(--c-field-bg);stroke-width:1.5"/>`
-    + `<g transform="translate(${tx},${ty}) scale(${s.toFixed(4)})">`
-    +   `<path d="${TRUCK_PATH}" style="fill:var(--c-field-bg)"/>`
-    + `</g>`;
+    + `<use href="#truck-icon" width="640" height="640" transform="translate(${tx},${ty}) scale(${s.toFixed(4)})" style="fill:var(--c-field-bg)"/>`;
 }
 
 // Converts a point in a field's local coordinate space to absolute SVG coordinates
@@ -357,7 +356,7 @@ function layoutFields(fields) {
 // ─── Corner renderers ─────────────────────────────────────────────────────────
 
 function renderCornerField(f) {
-  const { x, y, w, h, cornerType } = f;
+  const { x, y, w, h, cornerType, id } = f;
   const cx = x + w / 2;
 
   // Background + player strip at bottom + border on top
@@ -369,10 +368,12 @@ function renderCornerField(f) {
   const contentH = h - CORNER_STRIP_H;  // 130px
 
   // Places Font Awesome icon (viewBox 640×640) scaled to iconPx, centered horizontally.
-  const mkIcon = (paths, iconPx, ty) => {
+  // iconName is emitted as an SVG comment so the path is identifiable when reading the SVG.
+  const mkIcon = (paths, iconPx, ty, iconName) => {
     const s  = iconPx / 640;
     const tx = x + (w - iconPx) / 2;
-    return `<g transform="translate(${tx},${ty}) scale(${s})">${paths.join('')}</g>`;
+    const comment = iconName ? `<!-- FA: ${iconName} -->` : '';
+    return `<g transform="translate(${tx},${ty}) scale(${s})">${comment}${paths.join('')}</g>`;
   };
 
   // Label position — anchored just above the strip
@@ -387,9 +388,9 @@ function renderCornerField(f) {
       + ' 342.5L137.3 438.5C149.8 451 170.1 451 182.6 438.5C195.1 426 195.1 405.7 182.6 393.2'
       + 'L141.2 351.8L498.7 351.8L457.3 393.2C444.8 405.7 444.8 426 457.3 438.5C469.8 451'
       + ' 490.1 451 502.6 438.5z';
-    return bg
-      + mkIcon([`<path d="${d}" class="corner-icon"/>`], 62, y + 16)
-      + t(cx, labelY1, 'Start', 'class="t-corner-label" text-anchor="middle"');
+    return g(bg
+      + mkIcon([`<path d="${d}" class="corner-icon"/>`], 62, y + 16, 'arrows-left-right')
+      + t(cx, labelY1, 'Start', 'class="t-corner-label" text-anchor="middle"'), `id="field-${id}"`);
   }
 
   if (cornerType === 'garage') {
@@ -410,12 +411,12 @@ function renderCornerField(f) {
       + ' 463.5 32 496.3 32C532.1 32 562.4 55.5 572.6 88L504.3 88C491.1 88 480.4 98.7 480.3'
       + ' 111.9L480.3 112.1C480.4 125.3 491.1 136 504.3 136L572.6 136C562.4 168.5 532.1 192'
       + ' 496.3 192C463.5 192 435.3 172.3 423 144L217.7 144z';
-    return bg
+    return g(bg
       + mkIcon([
           `<path d="${dBody}"   class="corner-icon-dimmed"/>`,
           `<path d="${dWrench}" class="corner-icon"/>`,
-        ], 62, y + 16)
-      + t(cx, labelY1, 'Garage', 'class="t-corner-label" text-anchor="middle"');
+        ], 62, y + 16, 'car-wrench')
+      + t(cx, labelY1, 'Garage', 'class="t-corner-label" text-anchor="middle"'), `id="field-${id}"`);
   }
 
   if (cornerType === 'break') {
@@ -438,9 +439,9 @@ function renderCornerField(f) {
       + ' 377.1 484 344C484 333 475 324 464 324C453 324 444 333 444 344C444 355 435 364 424 364'
       + ' L408 364zM360 480C360 457.9 342.1 440 320 440C297.9 440 280 457.9 280 480C280 502.1'
       + ' 297.9 520 320 520C342.1 520 360 502.1 360 480z';
-    return bg
-      + mkIcon([`<path d="${d}" class="corner-icon"/>`], 62, y + 16)
-      + t(cx, labelY1, 'Take a Break', 'class="t-corner-label" text-anchor="middle"');
+    return g(bg
+      + mkIcon([`<path d="${d}" class="corner-icon"/>`], 62, y + 16, 'face-sleeping')
+      + t(cx, labelY1, 'Take a Break', 'class="t-corner-label" text-anchor="middle"'), `id="field-${id}"`);
   }
 
   if (cornerType === 'truck') {
@@ -468,12 +469,12 @@ function renderCornerField(f) {
       + ' C483.2 428 491.8 419.2 503 416.1C514.2 413.1 526.1 416.3 534.2 424.5C542.3 432.7'
       + ' 545.4 444.7 542.2 455.8C539.4 467 530.8 475.8 519.6 478.9C508.4 481.9 496.5 478.7'
       + ' 488.4 470.5C480.3 462.3 477.2 450.3 480.4 439.2z';
-    return bg
-      + mkIcon([`<path d="${d}" class="corner-icon"/>`], 62, y + 16)
-      + t(cx, labelY1, 'Truck Broke', 'class="t-corner-label" text-anchor="middle"');
+    return g(bg
+      + mkIcon([`<path d="${d}" class="corner-icon"/>`], 62, y + 16, 'car-burst')
+      + t(cx, labelY1, 'Truck Broke', 'class="t-corner-label" text-anchor="middle"'), `id="field-${id}"`);
   }
 
-  return bg;
+  return g(bg, `id="field-${id}"`);
 }
 
 // ─── Regular field renderer ───────────────────────────────────────────────────
@@ -518,7 +519,7 @@ function renderRegularField(f) {
     + t(rightCx, rowY + 10, esc(tagLabel),           'class="t-label"  text-anchor="middle"')
     + t(rightCx, rowY + 24, esc(fmt(amount)),         'class="t-amount" text-anchor="middle"');
 
-  return g(content, `transform="rotate(${rot},${cx},${cy})"`);
+  return g(content, `id="field-${f.id}" transform="rotate(${rot},${cx},${cy})"`);
 }
 
 // ─── Chance field renderer ────────────────────────────────────────────────────
@@ -530,7 +531,7 @@ function renderChanceField(f) {
     + r(x, y, w, h, 'class="field-border"')
     + t(x + w / 2, y + h / 2 + 8, '?',      'class="t-chance-wm" text-anchor="middle"')
     + t(x + w / 2, y + 44,         'CHANCE', 'class="t-chance"    text-anchor="middle"');
-  return g(content, `transform="rotate(${rot},${cx},${cy})"`);
+  return g(content, `id="field-${f.id}" transform="rotate(${rot},${cx},${cy})"`);
 }
 
 // ─── Board chrome ─────────────────────────────────────────────────────────────
@@ -619,6 +620,32 @@ function renderMeasurements(layout) {
       + `<text x="${lineX}" y="${my + 4}" text-anchor="middle" class="dim-label">${label}</text>`;
   }
 
+  // Vertical dim where the dimension line is to the LEFT of the element (lineX < elemX).
+  function dimVLeft(elemX, y1, y2, lineX, label) {
+    const xNear = elemX - GAP;
+    const xFar  = lineX - EXT;
+    const my    = (y1 + y2) / 2;
+    return `<line x1="${xNear}" y1="${y1}" x2="${xFar}" y2="${y1}" class="dim-ext"/>`
+      + `<line x1="${xNear}" y1="${y2}" x2="${xFar}" y2="${y2}" class="dim-ext"/>`
+      + `<line x1="${lineX}" y1="${y1}" x2="${lineX}" y2="${y2}"`
+      +   ` marker-start="url(#dim-arrow)" marker-end="url(#dim-arrow)" class="dim-line"/>`
+      + `<rect x="${lineX - LBLW / 2}" y="${my - LBLH / 2}" width="${LBLW}" height="${LBLH}" class="dim-bg"/>`
+      + `<text x="${lineX}" y="${my + 4}" text-anchor="middle" class="dim-label">${label}</text>`;
+  }
+
+  // Horizontal dim where the dimension line is ABOVE the element (lineY < elemY).
+  function dimHAbove(x1, x2, elemY, lineY, label) {
+    const yNear = elemY - GAP;
+    const yFar  = lineY - EXT;
+    const mx    = (x1 + x2) / 2;
+    return `<line x1="${x1}" y1="${yNear}" x2="${x1}" y2="${yFar}" class="dim-ext"/>`
+      + `<line x1="${x2}" y1="${yNear}" x2="${x2}" y2="${yFar}" class="dim-ext"/>`
+      + `<line x1="${x1}" y1="${lineY}" x2="${x2}" y2="${lineY}"`
+      +   ` marker-start="url(#dim-arrow)" marker-end="url(#dim-arrow)" class="dim-line"/>`
+      + `<rect x="${mx - LBLW / 2}" y="${lineY - LBLH / 2}" width="${LBLW}" height="${LBLH}" class="dim-bg"/>`
+      + `<text x="${mx}" y="${lineY + 4}" text-anchor="middle" class="dim-label">${label}</text>`;
+  }
+
   // Horizontal dim: dimension line runs at y=lineY between x1 and x2.
   // Extension lines connect the measured element (at elemY) to lineY.
   function dimH(x1, x2, elemY, lineY, label) {
@@ -668,6 +695,10 @@ function renderMeasurements(layout) {
   const vx4 = boardRight + 130;                               // total board height
 
   return [
+    // Left border distance (60) — horizontal dim line above the board, near top-left
+    dimHAbove(0, BOARD_X, BOARD_Y, BOARD_Y - 15, '60'),
+    // Top border distance (60) — vertical dim line left of the board, near top-left
+    dimVLeft(BOARD_X, 0, BOARD_Y, BOARD_X - 15, '60'),
     // Total field height (180)
     dimV(fx + fw,   fy,          fy + fh,             vx1,       '180'),
     // Title area height (70)
@@ -690,6 +721,11 @@ function renderMeasurements(layout) {
 function generateSVG(withMeasurements = false) {
   const layout = layoutFields(FIELDS);
 
+  const truckSymbol = `<symbol id="truck-icon" viewBox="0 0 640 640">`
+    + `<!-- Font Awesome Free: truck -->`
+    + `<path d="${TRUCK_PATH}"/>`
+    + `</symbol>`;
+
   const arrowMarker = withMeasurements
     ? `<marker id="dim-arrow" markerWidth="6" markerHeight="6"`
       + ` refX="5" refY="3" orient="auto-start-reverse">`
@@ -697,26 +733,82 @@ function generateSVG(withMeasurements = false) {
       + `</marker>`
     : '';
 
-  const defs = `<defs><style>${buildCSS()}</style>${arrowMarker}</defs>`;
+  const defs = `<defs><style>${buildCSS()}</style>${truckSymbol}${arrowMarker}</defs>`;
 
-  const fields = layout.map(f => {
-    if (f.type === 'corner') return renderCornerField(f);
-    if (f.type === 'chance') return renderChanceField(f);
-    return renderRegularField(f);
-  });
+  // Render fields grouped by section for interleaved comments
+  const byId    = id => renderCornerField(layout.find(f => f.id === id));
+  const regular = f  => f.type === 'chance' ? renderChanceField(f) : renderRegularField(f);
+  const bottom  = layout.filter(f => f.side === 'bottom');
+  const left    = layout.filter(f => f.side === 'left');
+  const top     = layout.filter(f => f.side === 'top');
+  const right   = layout.filter(f => f.side === 'right');
 
   const svgW = withMeasurements ? SVG_SIZE + 100 : SVG_SIZE;
   const svgH = withMeasurements ? SVG_SIZE + 20  : SVG_SIZE;
 
   const measurements = withMeasurements ? renderMeasurements(layout) : '';
-  const body = [defs, renderBoardBackground(svgW, svgH), ...fields, renderCenterArea(), renderPlayers(layout), measurements].join('');
+  const body = [
+    defs,
+    `<!-- ═══ Board background ═══ -->`,
+    renderBoardBackground(svgW, svgH),
+    `<!-- ═══ Corner fields ═══ -->`,
+    byId(1), byId(6), byId(11), byId(16),
+    `<!-- ═══ Bottom row (right to left) ═══ -->`,
+    ...bottom.map(regular),
+    `<!-- ═══ Left column (bottom to top) ═══ -->`,
+    ...left.map(regular),
+    `<!-- ═══ Top row (left to right) ═══ -->`,
+    ...top.map(regular),
+    `<!-- ═══ Right column (top to bottom) ═══ -->`,
+    ...right.map(regular),
+    `<!-- ═══ Center area ═══ -->`,
+    renderCenterArea(),
+    `<!-- ═══ Player tokens ═══ -->`,
+    renderPlayers(layout),
+    measurements,
+  ].join('');
 
   const raw = '<?xml version="1.0" encoding="UTF-8"?>'
     + `<svg xmlns="http://www.w3.org/2000/svg"`
     +     ` viewBox="0 0 ${svgW} ${svgH}"`
     +     ` width="${svgW}" height="${svgH}">`
     + `<title>Vault Run \u2014 Board Game</title>`
+    + `<!-- Generated by generate-board.js - edit the source and re-run: node generate-board.js -->`
     + body
+    + '</svg>';
+
+  return formatSVG(raw);
+}
+
+// ─── Player token SVG ─────────────────────────────────────────────────────────
+// Standalone 35×35 SVG containing a single player token (red, player 1).
+// Intended for use as an asset that can be embedded or referenced externally.
+
+function generatePlayerSVG() {
+  const D      = 35;                  // physical rendered size (px)
+  const pad    = 1;                   // extra space so stroke isn't clipped (stroke-width/2 = 0.75)
+  const canvas = D + pad * 2;         // 37 — SVG coordinate space
+  const cx     = canvas / 2;          // 18.5 — token center
+  const cy     = canvas / 2;
+  const R      = PLAYER_R;            // 17.5
+
+  const s  = (R * 1.5 * 0.75) / 576;
+  const tx = (cx - 320 * s).toFixed(2);
+  const ty = (cy - 336 * s).toFixed(2);
+
+  const truckSymbol = `<symbol id="truck-icon" viewBox="0 0 640 640">`
+    + `<!-- Font Awesome Free: truck -->`
+    + `<path d="${TRUCK_PATH}"/>`
+    + `</symbol>`;
+
+  const raw = '<?xml version="1.0" encoding="UTF-8"?>'
+    + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${canvas} ${canvas}" width="${D}" height="${D}">`
+    + `<title>Vault Run \u2014 Player Token</title>`
+    + `<defs>${truckSymbol}</defs>`
+    + `<circle cx="${cx}" cy="${cy}" r="${R}" fill="${PALETTE.player1}" stroke="white" stroke-width="1.5"/>`
+    + `<use href="#truck-icon" width="640" height="640"`
+    +   ` transform="translate(${tx},${ty}) scale(${s.toFixed(4)})"`
+    +   ` style="fill:${PALETTE.fieldBg}"/>`
     + '</svg>';
 
   return formatSVG(raw);
@@ -724,7 +816,9 @@ function generateSVG(withMeasurements = false) {
 
 // ─── Entry point ──────────────────────────────────────────────────────────────
 
-fs.writeFileSync('vault-run-board.svg',          generateSVG(false), 'utf8');
-fs.writeFileSync('vault-run-board-measured.svg', generateSVG(true),  'utf8');
+fs.writeFileSync('vault-run-board.svg',          generateSVG(false),  'utf8');
+fs.writeFileSync('vault-run-board-measured.svg', generateSVG(true),   'utf8');
+fs.writeFileSync('player.svg',                   generatePlayerSVG(), 'utf8');
 console.log('Board written to vault-run-board.svg');
 console.log('Measured board written to vault-run-board-measured.svg');
+console.log('Player token written to player.svg');

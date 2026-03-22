@@ -1,0 +1,98 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/vault-run-board.schema.json",
+    "title": "Vault Run Board",
+    "type": "array",
+    "minItems": 1,
+    "items": {
+      "$ref": "#/$defs/field"
+    },
+    "$defs": {
+      "field": {
+        "oneOf": [
+          { "$ref": "#/$defs/startField" },
+          { "$ref": "#/$defs/chanceField" },
+          { "$ref": "#/$defs/garageField" },
+          { "$ref": "#/$defs/breakField" },
+          { "$ref": "#/$defs/goToGarageField" },
+          { "$ref": "#/$defs/contractField" }
+        ]
+      },
+      "startField": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "const": "start"
+          }
+        }
+      },
+      "chanceField": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "const": "chance"
+          }
+        }
+      },
+      "garageField": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "const": "garage"
+          }
+        }
+      },
+      "breakField": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "const": "break"
+          }
+        }
+      },
+      "goToGarageField": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "const": "go-to-garage"
+          }
+        }
+      },
+      "contractField": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "contractPrice", "flow", "amount"],
+        "properties": {
+          "type": {
+            "const": "contract-field"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "contractPrice": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "flow": {
+            "type": "string",
+            "enum": ["pickup", "deposit"]
+          },
+          "amount": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  }

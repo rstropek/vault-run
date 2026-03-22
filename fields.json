@@ -1,0 +1,107 @@
+[
+    {
+        "type": "start"
+    },
+    {
+        "type": "contract-field",
+        "name": "Penny Lane Kiosk",
+        "contractPrice": 80000,
+        "flow": "pickup",
+        "amount": 15000
+    },
+    {
+        "type": "contract-field",
+        "name": "Union Savings Bank",
+        "contractPrice": 180000,
+        "flow": "deposit",
+        "amount": 40000
+    },
+    {
+        "type": "contract-field",
+        "name": "Night Owl Supermarket",
+        "contractPrice": 120000,
+        "flow": "pickup",
+        "amount": 25000
+    },
+    {
+        "type": "chance"
+    },
+    {
+        "type": "garage"
+    },
+    {
+        "type": "contract-field",
+        "name": "City Mall Cash Desk",
+        "contractPrice": 160000,
+        "flow": "pickup",
+        "amount": 35000
+    },
+    {
+        "type": "contract-field",
+        "name": "Lucky Dragon Casino",
+        "contractPrice": 260000,
+        "flow": "pickup",
+        "amount": 60000
+    },
+    {
+        "type": "contract-field",
+        "name": "Market Square Bank",
+        "contractPrice": 220000,
+        "flow": "deposit",
+        "amount": 50000
+    },
+    {
+        "type": "chance"
+    },
+    {
+        "type": "break"
+    },
+    {
+        "type": "contract-field",
+        "name": "Main Station Ticket Center",
+        "contractPrice": 100000,
+        "flow": "pickup",
+        "amount": 20000
+    },
+    {
+        "type": "contract-field",
+        "name": "Golden Goose Jewelry",
+        "contractPrice": 150000,
+        "flow": "deposit",
+        "amount": 30000
+    },
+    {
+        "type": "contract-field",
+        "name": "Harbor Trade Bank",
+        "contractPrice": 300000,
+        "flow": "deposit",
+        "amount": 70000
+    },
+    {
+        "type": "chance"
+    },
+    {
+        "type": "go-to-garage"
+    },
+    {
+        "type": "contract-field",
+        "contractPrice": 90000,
+        "flow": "deposit",
+        "amount": 15000
+    },
+    {
+        "type": "contract-field",
+        "contractPrice": 210000,
+        "flow": "pickup",
+        "amount": 45000
+    },
+    {
+        "type": "contract-field",
+        "contractPrice": 340000,
+        "flow": "deposit",
+        "amount": 80000
+    },
+    {
+        "type": "chance"
+    }
+]
