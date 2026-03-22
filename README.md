@@ -62,6 +62,12 @@ There is no single "correct" project. Pick a challenge that matches your skills 
 
 The only rule: **start by understanding the starter resources, then define your own scope.**
 
+## Build Step by Step
+
+> **Don't try to build the entire game in one go.**
+
+Work in **mini-sprints**: aim for working software roughly every hour. Each sprint should add one layer of functionality on top of the last. This way you always have something that runs. If time runs out, you still have a working subset of the game instead of a half-finished whole.
+
 ## Tech Stack
 
 Use whatever you want:
