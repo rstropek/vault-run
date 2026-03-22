@@ -31,6 +31,20 @@ A well-configured agentic loop means the AI can write code, run it, see errors, 
 
 > **The teams that invest in their setup early will ship dramatically more by the end of the day.**
 
+## Why This Exercise?
+
+Curious why Vault Run works well for practicing AI-assisted development? Read **[Why Vault Run?](why-vault-run.md)** — a breakdown of what makes this project effective for teaching and learning.
+
+## Sample Focus Areas
+
+Not sure where to start? These guides describe three different focus areas with concrete sprint plans:
+
+| Guide | Who it is for |
+|---|---|
+| [Game Logic + CLI](sample-focus-1.md) | Backend developers who prefer clean logic over pixels |
+| [Multiplayer with Security](sample-focus-2.md) | Network engineers and distributed systems enthusiasts |
+| [Interactive Board UI](sample-focus-3.md) | Frontend developers who want to build something visual |
+
 ## Starter Resources
 
 | File                                                           | Description                                                          |
