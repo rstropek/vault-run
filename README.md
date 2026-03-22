@@ -31,17 +31,17 @@ A well-configured agentic loop means the AI can write code, run it, see errors, 
 
 ## Starter Resources
 
-| File                           | Description                                                          |
-| ------------------------------ | -------------------------------------------------------------------- |
-| `rules.md`                     | Complete game rules — the single source of truth for game logic      |
-| `fields.json`                  | Board layout: 20 fields in order (start, contracts, chance, corners) |
-| `fields-schema.json`           | JSON Schema for the board data                                       |
-| `chance-card.json`             | All 30 chance cards with their effects and parameters                |
-| `chance-card-schema.json`      | JSON Schema for the chance card data                                 |
-| `vault-run-board.svg`          | Visual board layout                                                  |
-| `vault-run-board-measured.svg` | Board with engineering-style dimension annotations                   |
-| `player.svg`                   | Player token (35px diameter)                                         |
-| `generate-board.js`            | Node.js script that generates the SVG files                          |
+| File                                                           | Description                                                          |
+| -------------------------------------------------------------- | -------------------------------------------------------------------- |
+| [`rules.md`](rules.md)                                         | Complete game rules — the single source of truth for game logic      |
+| [`fields.json`](fields.json)                                   | Board layout: 20 fields in order (start, contracts, chance, corners) |
+| [`fields-schema.json`](fields-schema.json)                     | JSON Schema for the board data                                       |
+| [`chance-card.json`](chance-card.json)                         | All 30 chance cards with their effects and parameters                |
+| [`chance-card-schema.json`](chance-card-schema.json)           | JSON Schema for the chance card data                                 |
+| [`vault-run-board.svg`](vault-run-board.svg)                   | Visual board layout                                                  |
+| [`vault-run-board-measured.svg`](vault-run-board-measured.svg) | Board with engineering-style dimension annotations                   |
+| [`player.svg`](player.svg)                                     | Player token (35px diameter)                                         |
+| [`generate-board.js`](generate-board.js)                       | Node.js script that generates the SVG files                          |
 
 ## Make It Your Own
 
