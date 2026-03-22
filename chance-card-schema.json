@@ -1,0 +1,265 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/vault-run-chance-cards.schema.json",
+    "title": "Vault Run Chance Cards",
+    "type": "array",
+    "minItems": 1,
+    "items": {
+        "$ref": "#/$defs/chanceCard"
+    },
+    "$defs": {
+        "chanceCard": {
+            "oneOf": [
+                { "$ref": "#/$defs/extraTurnCard" },
+                { "$ref": "#/$defs/moveRelativeCard" },
+                { "$ref": "#/$defs/moveToFieldTypeCard" },
+                { "$ref": "#/$defs/moveToNextFieldTypeCard" },
+                { "$ref": "#/$defs/moveToNextContractFilterCard" },
+                { "$ref": "#/$defs/skipTurnsCard" },
+                { "$ref": "#/$defs/sendToGarageCard" },
+                { "$ref": "#/$defs/getOutOfGarageCard" },
+                { "$ref": "#/$defs/receiveCard" },
+                { "$ref": "#/$defs/payCard" },
+                { "$ref": "#/$defs/payPercentageCard" },
+                { "$ref": "#/$defs/loseTruckCashCard" },
+                { "$ref": "#/$defs/payEachOtherPlayerCard" },
+                { "$ref": "#/$defs/specialContractPurchaseCard" },
+                { "$ref": "#/$defs/waiveNextContractFineCard" }
+            ]
+        },
+        "baseCard": {
+            "type": "object",
+            "required": ["title", "effectType", "description"],
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "description": {
+                    "type": "string",
+                    "minLength": 1
+                }
+            }
+        },
+        "extraTurnCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "extra-turn" }
+            }
+        },
+        "moveRelativeCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description", "direction", "steps"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "move-relative" },
+                "direction": {
+                    "type": "string",
+                    "enum": ["clockwise", "counter-clockwise", "choose-direction"]
+                },
+                "steps": {
+                    "type": "integer",
+                    "minimum": 1
+                }
+            }
+        },
+        "moveToFieldTypeCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description", "target"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "move-to-field-type" },
+                "target": {
+                    "type": "string",
+                    "enum": ["start", "garage", "break", "go-to-garage", "chance"]
+                }
+            }
+        },
+        "moveToNextFieldTypeCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description", "direction", "target"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "move-to-next-field-type" },
+                "direction": {
+                    "type": "string",
+                    "enum": ["clockwise", "counter-clockwise"]
+                },
+                "target": {
+                    "type": "string",
+                    "enum": ["start", "garage", "break", "go-to-garage", "chance"]
+                }
+            }
+        },
+        "moveToNextContractFilterCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description", "direction", "targetFlow"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "move-to-next-contract-filter" },
+                "direction": {
+                    "type": "string",
+                    "enum": ["clockwise", "counter-clockwise"]
+                },
+                "targetFlow": {
+                    "type": "string",
+                    "enum": ["pickup", "deposit"]
+                }
+            }
+        },
+        "skipTurnsCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description", "turns"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "skip-turns" },
+                "turns": {
+                    "type": "integer",
+                    "minimum": 1
+                }
+            }
+        },
+        "sendToGarageCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "send-to-garage" }
+            }
+        },
+        "getOutOfGarageCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "get-out-of-garage-card" }
+            }
+        },
+        "receiveCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description", "amount"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "receive" },
+                "amount": {
+                    "type": "integer",
+                    "minimum": 1
+                }
+            }
+        },
+        "payCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description", "amount", "payTo"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "pay" },
+                "amount": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "payTo": {
+                    "const": "bank"
+                }
+            }
+        },
+        "payPercentageCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description", "percentage", "payTo"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "pay-percentage" },
+                "percentage": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                },
+                "payTo": {
+                    "const": "bank"
+                }
+            }
+        },
+        "loseTruckCashCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "lose-truck-cash" }
+            }
+        },
+        "payEachOtherPlayerCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description", "amount"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "pay-each-other-player" },
+                "amount": {
+                    "type": "integer",
+                    "minimum": 1
+                }
+            }
+        },
+        "specialContractPurchaseCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "special-contract-purchase" }
+            }
+        },
+        "waiveNextContractFineCard": {
+            "$ref": "#/$defs/baseCard",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "effectType", "description"],
+            "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "effectType": { "const": "waive-next-contract-fine" }
+            }
+        }
+    }
+}
