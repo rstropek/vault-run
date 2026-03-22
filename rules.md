@@ -21,6 +21,8 @@ Before the first turn, each player decides how much money to load from their **C
 
 ## The Board
 
+![Vault Run Board](vault-run-board.svg)
+
 The board is circular, just like a classic property game. Most regular fields represent places that need cash transport service ("contract fields"). These can be banks, shops, or other businesses. Each contract field has:
 
 - a contract price
