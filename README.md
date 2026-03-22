@@ -1,5 +1,7 @@
 # Vault Run - AI Coding Hackathon
 
+![Vault Run Board](vault-run-board.png)
+
 ## The Challenge
 
 Stop fixing bugs. Stop maintaining legacy code. Today, you build something from scratch - and you let a frontier AI model do the heavy lifting.
