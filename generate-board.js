@@ -1,6 +1,10 @@
 // VAULT RUN — Board Game SVG Generator
 // Run:    node generate-board.js
-// Output: vault-run-board.svg
+// Output: vault-run-board.svg              (web — CSS custom properties)
+//         vault-run-board-measured.svg      (web — with dimension annotations)
+//         vault-run-board-inkscape.svg      (portable — colors inlined for Inkscape/GIMP)
+//         vault-run-board-measured-inkscape.svg (portable — measured + inlined colors)
+//         player.svg
 //
 // To tweak the look without regenerating, edit the <defs><style> block in the
 // output SVG directly — all colors, fonts, and common styles are defined there.
@@ -98,6 +102,48 @@ const PALETTE = {
 };
 
 const FONT = "'Helvetica Neue', Arial, 'Liberation Sans', sans-serif";
+
+// ─── Portable SVG post-processing ───────────────────────────────────────────
+// Inkscape / GIMP don't support CSS custom properties.  resolveVars() replaces
+// every var(--c-…) / var(--font) reference with the literal value and strips
+// the now-redundant :root block.
+
+function resolveVars(svgString) {
+  const varMap = {
+    'var(--c-svg-bg)':        PALETTE.svgBg,
+    'var(--c-board-border)':  PALETTE.boardBorder,
+    'var(--c-board-surface)': PALETTE.boardSurface,
+    'var(--c-field-bg)':      PALETTE.fieldBg,
+    'var(--c-field-border)':  PALETTE.fieldBorder,
+    'var(--c-corner-bg)':     PALETTE.cornerBg,
+    'var(--c-corner-text)':   PALETTE.cornerText,
+    'var(--c-corner-sub)':    PALETTE.cornerSub,
+    'var(--c-pickup)':        PALETTE.pickup,
+    'var(--c-deposit)':       PALETTE.deposit,
+    'var(--c-chance)':        PALETTE.chance,
+    'var(--c-text-dark)':     PALETTE.textDark,
+    'var(--c-text-amount)':   PALETTE.textAmount,
+    'var(--c-text-label)':    PALETTE.textLabel,
+    'var(--c-center-bg)':     PALETTE.centerBg,
+    'var(--c-center-border)': PALETTE.centerBorder,
+    'var(--c-center-title)':  PALETTE.centerTitle,
+    'var(--c-center-sub)':    PALETTE.centerSub,
+    'var(--c-garage-inner)':  PALETTE.garageInner,
+    'var(--c-corner-strip)':  PALETTE.cornerStrip,
+    'var(--c-player-1)':      PALETTE.player1,
+    'var(--c-player-2)':      PALETTE.player2,
+    'var(--c-player-3)':      PALETTE.player3,
+    'var(--c-player-4)':      PALETTE.player4,
+    'var(--c-measure)':       PALETTE.measureColor,
+    'var(--font)':            FONT,
+  };
+  let result = svgString;
+  for (const [varRef, value] of Object.entries(varMap))
+    result = result.replaceAll(varRef, value);
+  // Remove the :root { … } block (now redundant)
+  result = result.replace(/:root\s*\{[^}]*\}/s, '');
+  return result;
+}
 
 // ─── CSS (embedded into <defs><style> in the SVG output) ─────────────────────
 
@@ -816,9 +862,17 @@ function generatePlayerSVG() {
 
 // ─── Entry point ──────────────────────────────────────────────────────────────
 
-fs.writeFileSync('vault-run-board.svg',          generateSVG(false),  'utf8');
-fs.writeFileSync('vault-run-board-measured.svg', generateSVG(true),   'utf8');
-fs.writeFileSync('player.svg',                   generatePlayerSVG(), 'utf8');
+const boardWeb      = generateSVG(false);
+const boardMeasured = generateSVG(true);
+
+fs.writeFileSync('vault-run-board.svg',                   boardWeb,                'utf8');
+fs.writeFileSync('vault-run-board-measured.svg',          boardMeasured,           'utf8');
+fs.writeFileSync('vault-run-board-inkscape.svg',          resolveVars(boardWeb),   'utf8');
+fs.writeFileSync('vault-run-board-measured-inkscape.svg', resolveVars(boardMeasured), 'utf8');
+fs.writeFileSync('player.svg',                            generatePlayerSVG(),     'utf8');
+
 console.log('Board written to vault-run-board.svg');
 console.log('Measured board written to vault-run-board-measured.svg');
+console.log('Inkscape board written to vault-run-board-inkscape.svg');
+console.log('Inkscape measured board written to vault-run-board-measured-inkscape.svg');
 console.log('Player token written to player.svg');

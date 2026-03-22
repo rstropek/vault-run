@@ -38,8 +38,12 @@ A well-configured agentic loop means the AI can write code, run it, see errors, 
 | [`fields-schema.json`](fields-schema.json)                     | JSON Schema for the board data                                       |
 | [`chance-card.json`](chance-card.json)                         | All 30 chance cards with their effects and parameters                |
 | [`chance-card-schema.json`](chance-card-schema.json)           | JSON Schema for the chance card data                                 |
-| [`vault-run-board.svg`](vault-run-board.svg)                   | Visual board layout                                                  |
-| [`vault-run-board-measured.svg`](vault-run-board-measured.svg) | Board with engineering-style dimension annotations                   |
+| [`vault-run-board.svg`](vault-run-board.svg)                   | Visual board layout (SVG for browsers)                               |
+| [`vault-run-board-inkscape.svg`](vault-run-board-inkscape.svg) | Visual board layout (portable SVG for Inkscape/GIMP)                 |
+| [`vault-run-board-inkscape.png`](vault-run-board-inkscape.png) | Visual board layout (PNG)                                            |
+| [`vault-run-board-measured.svg`](vault-run-board-measured.svg) | Board with dimension annotations (SVG for browsers)                  |
+| [`vault-run-board-measured-inkscape.svg`](vault-run-board-measured-inkscape.svg) | Board with dimension annotations (portable SVG)    |
+| [`vault-run-board-measured-inkscape.png`](vault-run-board-measured-inkscape.png) | Board with dimension annotations (PNG)             |
 | [`player.svg`](player.svg)                                     | Player token (35px diameter)                                         |
 | [`generate-board.js`](generate-board.js)                       | Node.js script that generates the SVG files                          |
 
