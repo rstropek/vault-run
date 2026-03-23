@@ -17,6 +17,13 @@ This is a spec-driven development exercise. Give the AI a spec, guide it when it
 3. **Build it with AI** — use spec-driven development: describe what you want, let the AI write the code
 4. **Hands off the keyboard (mostly)** — fixing small bugs or nudging the AI when it is stuck is fine, but try to avoid hand-writing code yourself
 
+## Rules of Engagement
+
+- **Let the AI write the code.** Describe what you want in natural language. Paste specs, rules, and data files into context. Iterate on the output.
+- **Fixing bugs is fair game.** If the AI generates something broken and a quick manual fix is faster than re-prompting, go for it.
+- **Guiding the AI is encouraged.** Refine prompts, break tasks into smaller pieces, provide examples — that is the skill you are practicing today.
+- **Hand-writing large chunks of code defeats the purpose.** The goal is to experience how far AI-driven development can take you in a single session.
+
 ## Teamwork
 
 Work in **teams of two**. Start with **pair programming**: share a screen, explore the starter resources, and align on your approach. Once you have a plan and initial structure, switch to **independent work**. That forces you to use GitHub for real: create branches, push code, handle merges, and resolve conflicts.
@@ -43,20 +50,6 @@ If you want to get more out of AI-assisted development, investigate these topics
 - Context Management
 - Agentic Feedback Loops
 - Verification-First Development
-
-## Why This Exercise?
-
-Curious why Vault Run works well for practicing AI-assisted development? Read **[Why Vault Run?](why-vault-run.md)** — a breakdown of what makes this project effective for teaching and learning.
-
-## Sample Focus Areas
-
-Not sure where to start? These guides describe three different focus areas with concrete sprint plans:
-
-| Guide | Who it is for |
-|---|---|
-| [Game Logic + CLI](sample-focus-1.md) | Backend developers who prefer clean logic over pixels |
-| [Multiplayer with Security](sample-focus-2.md) | Network engineers and distributed systems enthusiasts |
-| [Interactive Board UI](sample-focus-3.md) | Frontend developers who want to build something visual |
 
 ## Starter Resources
 
@@ -89,6 +82,16 @@ There is no single "correct" project. Pick a challenge that matches your skills 
 
 The only rule: **start by understanding the starter resources, then define your own scope.**
 
+## Sample Focus Areas
+
+Not sure where to start? These guides describe three different focus areas with concrete sprint plans:
+
+| Guide | Who it is for |
+|---|---|
+| [Game Logic + CLI](sample-focus-1.md) | Backend developers who prefer clean logic over pixels |
+| [Multiplayer with Security](sample-focus-2.md) | Network engineers and distributed systems enthusiasts |
+| [Interactive Board UI](sample-focus-3.md) | Frontend developers who want to build something visual |
+
 ## Build Step by Step
 
 > **Don't try to build the entire game in one go.**
@@ -120,12 +123,9 @@ There is no prize ceremony and no leaderboard, but there are badges. If you pull
 
 These badges are self-awarded. Nobody is checking. But if you earn one, you will know.
 
-## Rules of Engagement
+## Why This Exercise?
 
-- **Let the AI write the code.** Describe what you want in natural language. Paste specs, rules, and data files into context. Iterate on the output.
-- **Fixing bugs is fair game.** If the AI generates something broken and a quick manual fix is faster than re-prompting, go for it.
-- **Guiding the AI is encouraged.** Refine prompts, break tasks into smaller pieces, provide examples — that is the skill you are practicing today.
-- **Hand-writing large chunks of code defeats the purpose.** The goal is to experience how far AI-driven development can take you in a single session.
+Curious why Vault Run works well for practicing AI-assisted development? Read **[Why Vault Run?](why-vault-run.md)** — a breakdown of what makes this project effective for teaching and learning.
 
 ## Licensing
 
