@@ -111,3 +111,10 @@ These badges are self-awarded. Nobody is checking. But if you earn one, you will
 - **Fixing bugs is fair game.** If the AI generates something broken and a quick manual fix is faster than re-prompting, go for it.
 - **Guiding the AI is encouraged.** Refine prompts, break tasks into smaller pieces, provide examples — that is the skill you are practicing today.
 - **Hand-writing large chunks of code defeats the purpose.** The goal is to experience how far AI-driven development can take you in a single session.
+
+## Licensing
+
+The sample specification and artwork in this repository are licensed under
+**CC BY-NC 4.0**. See [`LICENSE-CONTENT`](LICENSE-CONTENT).
+
+The code in this repository is licensed under **MIT**. See [`LICENSE`](LICENSE).
