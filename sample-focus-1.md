@@ -4,7 +4,7 @@
 
 ## The Idea
 
-Build the complete Vault Run game engine with a terminal-based interface. No browser, no graphics, just clean game logic and a CLI that lets players type commands and see the board state as text. Correctness is king.
+Build the complete Vault Run game engine with a terminal-based interface. No browser, no graphics, just clean game logic and a CLI that lets players type commands and see the board state as text. Correctness is the priority.
 
 ## Why This Focus?
 
@@ -24,7 +24,7 @@ You get to concentrate on the hard part of any game: getting the rules exactly r
 ### Sprint 2 — Contracts
 
 - When a player lands on an unowned contract field, prompt to buy it (pay contract price to Bank).
-- When landing on an owned contract, implement fulfillment logic
+- When landing on an owned contract, implement fulfillment logic.
 - Implement contract failure: player cannot or chooses not to fulfill — lose the contract, pay 10% fine.
 - Track Cash Vault and truck balances separately.
 
@@ -33,7 +33,7 @@ You get to concentrate on the hard part of any game: getting the rules exactly r
 ### Sprint 3 — Multiplayer and Money
 
 - Add support for 2-4 players taking turns.
-- Implement contract negotiation between players
+- Implement contract negotiation between players.
 - Implement bankruptcy detection: if total money (Cash Vault + truck) is less than a required payment, the player is out.
 - Add both game modes: Limited Turns and Last One Standing.
 
@@ -42,7 +42,7 @@ You get to concentrate on the hard part of any game: getting the rules exactly r
 ### Sprint 4 — Chance Cards
 
 - Load `chance-card.json` and implement a shuffled deck.
-- Implement all 15 effect types
+- Implement all 15 effect types.
 - Handle recursive field resolution: when a card moves a player to a new field, resolve that field immediately.
 - Reinsert used cards at a random position in the deck.
 
@@ -50,7 +50,7 @@ You get to concentrate on the hard part of any game: getting the rules exactly r
 
 ### Sprint 5 — Polish and Testing
 
-- Write unit tests for core game logic
+- Write unit tests for core game logic.
 - Improve the CLI display: colored output, clearer board visualization, game summary at end.
 - Add input validation and error handling for player commands.
 - Optionally: add a simple AI player that makes random valid moves, so you can test a full game without needing human input for every player.

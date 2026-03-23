@@ -1,6 +1,6 @@
 # Why Vault Run?
 
-This document explains why **Vault Run** works well as an exercise for learning and practicing AI-assisted coding. It is written for trainers evaluating whether this example fits their teaching goals.
+This document explains why **Vault Run** works well for learning and practicing AI-assisted coding. It is written for trainers evaluating whether the example fits their teaching goals.
 
 ## A Single Domain, Many Disciplines
 
@@ -19,14 +19,14 @@ No single participant is expected to cover all of these. The point is that the d
 
 ## Structured Yet Open
 
-The starter resources provide a solid foundation, complete game rules, board layout data with JSON Schemas, chance card definitions, and visual assets, so participants do not waste time inventing a domain. At the same time, the exercise leaves substantial design space open:
+The starter resources provide a solid foundation: complete game rules, board layout data with JSON Schemas, chance card definitions, and visual assets. Participants do not waste time inventing a domain. At the same time, the exercise leaves substantial design space open:
 
 - **Game mechanics**: The rules are defined, but how to implement them (state machine, event sourcing, ECS) is up to the participant.
-- **Chance cards**: The card effects range from trivial (receive money) to complex (move to the next contract field matching a filter). Implementing all 15 effect types is a real design challenge. Swift progress requires efficient use of AI tools.
+- **Chance cards**: The card effects range from trivial (receive money) to complex (move to the next contract field matching a filter). Implementing all 15 effect types is a real design challenge and a good test of how effectively participants use AI tools.
 - **Board rendering**: The SVG board is provided as a reference, but participants can render it however they want (e.g. canvas, WebGL, terminal ASCII art, or a completely different visual style).
 - **Multiplayer architecture**: Central server? Peer-to-peer? Turn-based polling or real-time push? These are genuine architectural decisions with trade-offs.
 
-This balance of structure and freedom is hard to achieve in a teaching exercise. Too much structure feels like filling in blanks. Too little structure leads to analysis paralysis. Vault Run hits a sweet spot.
+This balance of structure and freedom is hard to achieve in a teaching exercise. Too much structure feels like filling in blanks. Too little structure leads to analysis paralysis. Vault Run strikes that balance well.
 
 ## Natural Complexity Gradient
 
@@ -39,7 +39,7 @@ The game has a natural layering that maps well to incremental development:
 5. **Advanced**: Chance cards with 15 different effect types, including recursive field resolution.
 6. **Expert**: Multiplayer synchronization, anti-cheat, AI opponents, game balancing via simulation.
 
-Every participant can find the right level of challenge. Beginners get a working game with basic movement in a few hours. Advanced developers can spend an entire day on multiplayer architecture or AI strategy optimization. Nobody runs out of things to do.
+Every participant can find the right level of challenge. Beginners can get a working game with basic movement in a few hours. Advanced developers can spend an entire day on multiplayer architecture or AI strategy optimization. Nobody runs out of ways to go deeper.
 
 ## Ideal for AI-Assisted Development
 
@@ -47,7 +47,7 @@ Board games are particularly well-suited for AI code generation because:
 
 - **The rules are unambiguous.** Natural-language game rules translate directly into code logic. AI models excel at this kind of spec-to-code translation.
 - **The data is structured.** JSON files with schemas give the AI precise, machine-readable context. No guesswork about data formats.
-- **The domain is familiar.** Every AI model has been trained on board game implementations. Concepts like turns, dice, boards, and cards are well-represented in training data.
+- **The domain is familiar.** Board game implementations are well represented in training data. Concepts like turns, dice, boards, and cards are common enough that models usually handle them well.
 - **Testing is straightforward.** Game rules produce deterministic outcomes for given inputs. "If a player with 30,000 in their truck lands on a deposit field requiring 50,000, the contract fails and they pay a fine" — this is a natural test case that the AI can generate.
 - **The visual output is motivating.** Seeing a board render, tokens move, and dice animate provides immediate, visible feedback. This keeps participants engaged even during long AI-driven coding sessions.
 
@@ -80,4 +80,4 @@ Beyond the game itself, Vault Run teaches participants how to work effectively w
 - **Agentic workflows**: Setting up tooling so the AI can run, test, and fix its own code autonomously.
 - **Parallel agent coordination**: Running multiple AI agents on independent tasks using Git worktrees.
 
-These are the skills that matter in modern software development. Vault Run provides a concrete, engaging context to practice them.
+These are core skills in modern software development. Vault Run provides a concrete context to practice them.

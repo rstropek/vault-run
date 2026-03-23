@@ -4,7 +4,7 @@
 
 ## The Idea
 
-Take the provided SVG board and turn it into a fully interactive, animated game interface in the browser. Dice roll with physics, tokens glide along the board, contracts light up when purchased, chance cards flip with style. The game logic can run entirely in the browser, no server needed.
+Take the provided SVG board and turn it into a fully interactive, animated game interface in the browser. Dice rolls with physics, tokens glide along the board, contracts light up when purchased, and chance cards flip with style. The game logic can run entirely in the browser; no server needed.
 
 ## Why This Focus?
 
@@ -56,7 +56,7 @@ Frontend work is where AI coding assistants shine the most visibly. You describe
 - Add sound effects: dice roll, coin clink for payments, engine sounds for movement.
 - Implement a game log panel showing recent actions in plain text.
 - Implement both game modes (Limited Turns with a turn counter, Last One Standing with elimination effects).
-- Dark mode / theme switching.
+- Add dark mode or theme switching.
 - Responsive design polish: test on mobile and tablet sizes.
 
 ## What You Will Practice

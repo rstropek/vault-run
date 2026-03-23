@@ -6,9 +6,9 @@
 
 Stop fixing bugs. Stop maintaining legacy code. Today, you build something from scratch - and you let a frontier AI model do the heavy lifting.
 
-**Vault Run** is a board game about running a cash transport company. Players move around a board, buy contracts, pick up and deliver cash, and try to outsmart their rivals. Your job today: turn this game concept into a working piece of software, driven almost entirely by AI-generated code.
+**Vault Run** is a board game about running a cash transport company. Players move around a board, buy contracts, pick up and deliver cash, and try to outsmart their rivals. Your job: turn this game concept into working software, driven almost entirely by AI-generated code.
 
-This is your chance to experience what spec-driven development with modern AI really feels like. Give the AI a spec, guide it when it gets stuck, and watch a complete project come to life.
+This is a spec-driven development exercise. Give the AI a spec, guide it when it gets stuck, and see how far you can push it in a single day.
 
 ## How It Works
 
@@ -19,17 +19,15 @@ This is your chance to experience what spec-driven development with modern AI re
 
 ## Teamwork
 
-Work in **teams of two**. Start the day with **pair programming** — sit together, share a screen, explore the starter resources, and align on your approach. Once you have a solid plan and initial structure, switch to **independent work**. This naturally forces you to use GitHub for real: create branches, push code, handle merges, resolve conflicts. That is a valuable part of the exercise.
+Work in **teams of two**. Start with **pair programming**: share a screen, explore the starter resources, and align on your approach. Once you have a plan and initial structure, switch to **independent work**. That forces you to use GitHub for real: create branches, push code, handle merges, and resolve conflicts.
 
 ## Set Up Your Agentic Loop
 
-Before you start coding, invest time in setting up a proper agentic development workflow. This is not a nice-to-have. It is the single most important factor for your productivity today.
+Before you start coding, set up a proper agentic development workflow. It will matter more than any framework choice.
 
-A well-configured agentic loop means the AI can write code, run it, see errors, fix them, and iterate — all without you copying and pasting between windows. Make sure your AI tool can execute commands, read terminal output, and access your project files directly. Set up linting, formatting, and test commands so the agent can validate its own work. Write an `AGENTS.md` and create AI skills with project context, conventions, and instructions so the agent stays on track.
+Your AI tool should be able to write code, run it, read terminal output, fix errors, and iterate without copy-pasting between windows. Set up linting, formatting, and test commands so the agent can validate its own work. Write an `AGENTS.md` and create AI skills with project context, conventions, and instructions so the agent stays on track.
 
-**Don't just watch one agent work.** Run multiple agents in parallel on independent tasks. If you are unfamiliar with **Git Worktrees**, now is a great time to learn: they let multiple agents work on the same repo simultaneously without stepping on each other's toes.
-
-> **The teams that invest in their setup early will ship dramatically more by the end of the day.**
+Run multiple agents in parallel on independent tasks. If you are unfamiliar with **Git Worktrees**, this is a good time to learn: they let multiple agents work on the same repo without stepping on each other's toes.
 
 ## Why This Exercise?
 
@@ -67,11 +65,11 @@ Not sure where to start? These guides describe three different focus areas with 
 
 There is no single "correct" project. Pick a challenge that matches your skills and interests:
 
-* **Full-stack dev?** Build the complete game with a backend (game state, rules engine, turn management) and a polished frontend (animated board, drag-and-drop, turn UI).
-* **Backend-focused?** Implement the full game logic with a simplified CLI interface. Players type commands, the terminal shows the board state. No graphics needed, correctness is king.
-* **Into networking?** Create a multiplayer version where players connect from different machines. Use a central server, or go peer-to-peer. Handle synchronization, disconnects, and cheating prevention.
-* **Frontend enthusiast?** Take the SVG board and bring it to life. Animate dice rolls, token movement, contract purchases. Wire it up to a mock backend or local game state.
-* **AI/ML curious?** Build a bot that plays Vault Run. Implement different strategies (aggressive buyer, cautious saver, route optimizer) and pit them against each other.
+* **Full-stack dev?** Build the complete game with a backend (game state, rules engine, turn management) and a frontend (animated board, drag-and-drop, turn UI).
+* **Backend-focused?** Implement the full game logic with a CLI. Players type commands, the terminal shows the board state. No graphics needed.
+* **Into networking?** Create a multiplayer version where players connect from different machines. Use a central server or go peer-to-peer. Handle synchronization, disconnects, and cheating prevention.
+* **Frontend enthusiast?** Take the SVG board and bring it to life. Animate dice rolls, token movement, and contract purchases. Wire it up to a mock backend or local game state.
+* **AI/ML curious?** Build a bot that plays Vault Run. Implement different strategies and pit them against each other.
 * **Mobile dev?** Build a native or cross-platform mobile version of the game.
 
 The only rule: **start by understanding the starter resources, then define your own scope.**
@@ -91,19 +89,19 @@ Use whatever you want:
 - **Testing** - pick your favorite testing framework
 - **Editor** - VS Code, VS, vim — whatever gives you the best AI-assisted workflow
 
-Picking a tech stack you are not perfectly familiar with is absolutely fine — even encouraged. You are not the one writing the code today, the AI is. Always wanted to try Rust, Go, or Svelte? This is the perfect low-risk opportunity. The AI knows these technologies well, and you will learn by reviewing and guiding its output. The worst that happens is you learn something new.
+Picking a tech stack you do not know well is fine, even encouraged. The AI is doing most of the typing. If you have wanted to try Rust, Go, or Svelte, this is a good opportunity to learn by reviewing and guiding the output.
 
 ## Badges
 
-There is no prize ceremony and no leaderboard — but there are badges. If you pull off one of the techniques below, award it to yourself. Copy your badges, post it, brag about it. These are harder than they sound.
+There is no prize ceremony and no leaderboard, but there are badges. If you pull off one of the techniques below, award it to yourself. These are harder than they sound.
 
 | Badge | How to earn it |
 |---|---|
-| <img src="badge-agent-manager.png" width="120" alt="Agent Manager badge"> | **Agent Manager** — Delegate a non-trivial task to an AI agent using a carefully crafted, multi-step prompt. Not "write a function" — think "implement the full contract-purchasing flow including validation, state updates, and error handling". |
-| <img src="badge-multi-tasker.png" width="120" alt="Multi-Tasker badge"> | **Multi-Tasker** — Run two or more AI agents at the same time, each tackling a different part of the project. Game logic on one side, UI on the other — simultaneously. |
-| <img src="badge-tree-herder.png" width="120" alt="Tree Herder badge"> | **Tree Herder** — Use Git Worktrees to let multiple agents work on the same repository in parallel without conflicts. If you have never used worktrees before, this one will change how you think about parallel development. |
-| <img src="badge-remote-controller.png" width="120" alt="Remote Controller badge"> | **Remote Controller** — Have an AI agent drive end-to-end UI tests: open a browser, interact with your app, and verify the results — all without you touching the mouse. |
-| <img src="badge-terminal-hero.png" width="120" alt="Terminal Hero badge"> | **Terminal Hero** — Run an AI agent directly in the terminal. No GUI, no IDE plugin — just the shell, the model, and your prompts. |
+| <img src="badge-agent-manager.png" width="180" alt="Agent Manager badge"> | **Agent Manager** — Delegate a non-trivial task to an AI agent using a carefully crafted, multi-step prompt. Not "write a function" — think "implement the full contract-purchasing flow including validation, state updates, and error handling". |
+| <img src="badge-multi-tasker.png" width="180" alt="Multi-Tasker badge"> | **Multi-Tasker** — Run two or more AI agents at the same time, each tackling a different part of the project. Game logic on one side, UI on the other — simultaneously. |
+| <img src="badge-tree-herder.png" width="180" alt="Tree Herder badge"> | **Tree Herder** — Use Git Worktrees to let multiple agents work on the same repository in parallel without conflicts. If you have never used worktrees before, this one will change how you think about parallel development. |
+| <img src="badge-remote-controller.png" width="180" alt="Remote Controller badge"> | **Remote Controller** — Have an AI agent drive end-to-end UI tests: open a browser, interact with your app, and verify the results — all without you touching the mouse. |
+| <img src="badge-terminal-hero.png" width="180" alt="Terminal Hero badge"> | **Terminal Hero** — Run an AI agent directly in the terminal. No GUI, no IDE plugin — just the shell, the model, and your prompts. |
 
 These badges are self-awarded. Nobody is checking. But if you earn one, you will know.
 
@@ -113,5 +111,3 @@ These badges are self-awarded. Nobody is checking. But if you earn one, you will
 - **Fixing bugs is fair game.** If the AI generates something broken and a quick manual fix is faster than re-prompting, go for it.
 - **Guiding the AI is encouraged.** Refine prompts, break tasks into smaller pieces, provide examples — that is the skill you are practicing today.
 - **Hand-writing large chunks of code defeats the purpose.** The goal is to experience how far AI-driven development can take you in a single session.
-
-Good luck, have fun, and let the AI do the work.

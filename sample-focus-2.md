@@ -8,7 +8,7 @@ Build a multiplayer Vault Run server where players connect from different machin
 
 ## Why This Focus?
 
-Most coding exercises treat networking as an afterthought. Here, it is the core challenge. You have to solve real distributed systems problems: state synchronization, conflict resolution, disconnection handling, and — critically — security. In a competitive game, every client-side decision is an attack surface. Can a player fake a dice roll? Claim a contract they cannot afford? Modify their truck capacity? Your architecture has to make these attacks impossible by design.
+Most coding exercises treat networking as an afterthought. Here, it is the core challenge. You have to solve real distributed systems problems: state synchronization, conflict resolution, disconnection handling, and security. In a competitive game, every client-side decision is an attack surface. Can a player fake a dice roll? Claim a contract they cannot afford? Modify their truck capacity? Your architecture has to make these attacks impossible by design.
 
 ## Suggested Sprint Plan
 
@@ -67,4 +67,4 @@ Most coding exercises treat networking as an afterthought. Here, it is the core 
 - Handling distributed systems concerns: ordering, consistency, reconnection.
 - Thinking adversarially: every input is a potential attack vector.
 - Building observable systems with logging and metrics.
-- Feeding architecture constraints to an AI and getting it to generate secure-by-default code.
+- Feeding architecture constraints to an AI so it generates secure-by-default code.
