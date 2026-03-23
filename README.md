@@ -29,6 +29,21 @@ Your AI tool should be able to write code, run it, read terminal output, fix err
 
 Run multiple agents in parallel on independent tasks. If you are unfamiliar with **Git Worktrees**, this is a good time to learn: they let multiple agents work on the same repo without stepping on each other's toes.
 
+## Topics to Explore
+
+If you want to get more out of AI-assisted development, investigate these topics on your own:
+
+- `AGENTS.md / CLAUDE.md`
+- Agent Skills
+- Custom Agents
+- Isolated Subagents
+- Git Worktrees
+- Spec-Driven Development
+- Prompt Decomposition
+- Context Management
+- Agentic Feedback Loops
+- Verification-First Development
+
 ## Why This Exercise?
 
 Curious why Vault Run works well for practicing AI-assisted development? Read **[Why Vault Run?](why-vault-run.md)** — a breakdown of what makes this project effective for teaching and learning.
