@@ -98,6 +98,28 @@ Not sure where to start? These guides describe three different focus areas with 
 
 Work in **mini-sprints**: aim for working software roughly every hour. Each sprint should add one layer of functionality on top of the last. This way you always have something that runs. If time runs out, you still have a working subset of the game instead of a half-finished whole.
 
+## (Spoiler!) Change Request
+
+The rules have a flaw. This is by design. The moderator of the hackathon should introduce the following "change request" at some point during the session. The challenge is to implement the change without breaking what you already have.
+
+  _**Change Request: Introduce Earnings as a Separate Victory Metric**_
+  
+  _Just when implementation was starting to feel nicely under control, the game economy revealed a small but important plot twist: cash on hand and actual business success are currently treated as the same thing, even though they really should not be._
+  
+  _Right now, money in the Cash Vault and the truck does double duty. It is both the money players use during the game and the basis for winning in Limited Turns mode. That sounds convenient, but it creates a problem in practice. A company can make smart operational decisions, fulfill valuable contracts, and still look weaker simply because it has less cash at that exact moment. This is especially noticeable with deposit contracts, which are useful and thematic, but reduce truck cash and therefore make a player look worse under the current victory condition. In other words, the rules currently reward holding cash more directly than running a profitable transport business._
+  
+  _This must be corrected by introducing a separate account called Earnings._
+  
+  _Earnings represent a company’s accumulated profit during the game. They must be tracked separately from the Cash Vault and the truck. Earnings cannot be spent, transferred, loaded into the truck, or used to pay any cost. They are not cash reserves. They are the measure of how well the company is actually performing._
+  
+  _As a result, contract rewards must no longer be paid into the Cash Vault. Whenever a player successfully fulfills a contract, the reward equal to 10% of the field’s amount must be added to that player’s Earnings instead._
+  
+  _The win condition for Limited Turns mode must also change accordingly. At the end of the game, the player with the highest Earnings wins. If two or more players are tied, the tied player with the most money in their Cash Vault + truck wins the tie-break._
+  
+  _The bankruptcy rule remains unchanged in principle, but it must now be interpreted more strictly. A player is bankrupt when they cannot pay a required amount using only the money available in their Cash Vault and truck. Earnings do not count as available money and cannot be used to avoid bankruptcy._
+  
+  _So yes, halfway through the journey, the finance department has arrived with an inconvenient but necessary clarification: profit is not the same as liquidity. From this point forward, the rules must reflect that distinction._
+
 ## Tech Stack
 
 Use whatever you want:
